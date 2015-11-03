@@ -1,0 +1,12 @@
+{
+  "VERR?": {
+    "desc": "Software Version",
+    "params": [],
+    "rlength": 11
+  },
+  "VERS?": {
+    "desc": "Software Version",
+    "params": [],
+    "rlength": 11
+  }
+}
