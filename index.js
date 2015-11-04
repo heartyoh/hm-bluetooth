@@ -4,7 +4,8 @@ var SerialConnect = require('./lib/serial_connect');
 
 var stdin = process.openStdin();
 
-var connect = new SerialConnect('/dev/tty.usbserial');
+// var connect = new SerialConnect('/dev/tty.usbserial');
+var connect = new SerialConnect('/dev/ttyUSB0');
 
 connect.open(function(err) {
   if(err) {
@@ -12,5 +13,5 @@ connect.open(function(err) {
     return;
   }
 
-  connect.get('VERR?');
+  connect.get('ADC', '1');
 });
