@@ -3,6 +3,7 @@
 var Help = require('./help');
 var SerialPort = require('serialport');
 var SerialConnect = require('../lib/serial_connect');
+var CommandPattern = require('../lib/command_pattern');
 
 // var connect = new SerialConnect('/dev/tty.usbserial');
 var connect = new SerialConnect('/dev/ttyUSB0');
@@ -25,28 +26,18 @@ function prompt() {
   process.stdout.write('❤ ');
 }
 
-function printSerialPorts(err, ports) {
-  if(err) {
-    console.log('Error during getting serial ports : ' + err);
-  } else {
-    console.log('Total ' + ports.length + ' Serial Ports are found.');
-    ports.forEach(function(port, i) {
-      console.log('[ ' + (i+1) + ' ] ' + port.comName);
-      console.log('\tpnp ID => ' + port.pnpId);
-      console.log('\tmade by => ' + port.manufacturer);
-    });
-  }
-
-  prompt();
-}
-
-
 function main() {
 
   var stdin = process.openStdin();
 
   /* set command complete callback */
   connect.on('complete', function(data) {
+    console.log(data);
+    prompt();
+  });
+
+  connect.on('error', function(error) {
+    console.error(error);
     prompt();
   });
 
@@ -59,7 +50,7 @@ function main() {
     switch(first) {
       case 'H':
       case 'HELP':
-        Help.print();
+        Help.print(command.split(' ')[1]);
         prompt();
         break;
 
