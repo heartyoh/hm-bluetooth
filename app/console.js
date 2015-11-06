@@ -1,12 +1,13 @@
 'use strict'
 
+var Connect = require('../index');
+
 var Help = require('./help');
 var SerialPort = require('serialport');
-var SerialConnect = require('../lib/serial_connect');
 var CommandPattern = require('../lib/command_pattern');
 
-var connect = new SerialConnect('/dev/tty.usbserial');
-// var connect = new SerialConnect('/dev/ttyUSB0');
+var connect = new Connect('/dev/tty.usbserial');
+// var connect = new Connect('/dev/ttyUSB0');
 
 connect.open(function(err) {
   if(err) {
