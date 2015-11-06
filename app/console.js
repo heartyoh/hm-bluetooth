@@ -5,8 +5,8 @@ var SerialPort = require('serialport');
 var SerialConnect = require('../lib/serial_connect');
 var CommandPattern = require('../lib/command_pattern');
 
-// var connect = new SerialConnect('/dev/tty.usbserial');
-var connect = new SerialConnect('/dev/ttyUSB0');
+var connect = new SerialConnect('/dev/tty.usbserial');
+// var connect = new SerialConnect('/dev/ttyUSB0');
 
 connect.open(function(err) {
   if(err) {
@@ -29,17 +29,6 @@ function prompt() {
 function main() {
 
   var stdin = process.openStdin();
-
-  /* set command complete callback */
-  connect.on('complete', function(data) {
-    console.log(data);
-    prompt();
-  });
-
-  connect.on('error', function(error) {
-    console.error(error);
-    prompt();
-  });
 
   stdin.addListener("data", function(d) {
     var command = d.toString().trim();
@@ -83,6 +72,17 @@ function main() {
       default:
         prompt();
     }
+  });
+
+  /* set command complete callback */
+  connect.on('complete', function(data) {
+    console.log(data);
+    prompt();
+  });
+
+  connect.on('error', function(error) {
+    console.error(error);
+    prompt();
   });
 
   prompt();
