@@ -71,7 +71,7 @@ function main() {
         break;
 
       default:
-        prompt();
+        connect.command.apply(connect, command.split(' '))
     }
   });
 

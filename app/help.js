@@ -15,7 +15,7 @@ function print(command) {
 }
 
 function printSerialPorts(err, ports) {
-  
+
   if(err) {
     console.log('Error during getting serial ports : ' + err);
   } else {
@@ -38,9 +38,16 @@ function printTopMenu() {
   console.log("[h]elp : print help.");
   console.log("e[x]it : exit program.");
   console.log("[p]orts : print available serial port list.");
-  
+
   console.log("");
-  console.log("at : test command.");
+  console.log("AT : Attention!");
+
+  for(var id in CommandPattern) {
+    let command = CommandPattern[id];
+    if(command.command) {
+      console.log(id + ' : ' + command.desc);
+    }
+  }
 
   console.log("");
   console.log("[g]et commands");
