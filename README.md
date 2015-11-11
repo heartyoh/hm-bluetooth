@@ -14,7 +14,7 @@ $ npm install
 $ node app/console
 ❤               # command prompt
 ❤ h             # help - available command list
-❤ h name        # help for the command, setting
+❤ h name        # help for the specified command or setting
 ❤ at            # attention command
 ❤ g name        # get commands : g [command]
 ❤ s name TEST   # set command : s [command] [parameter]
