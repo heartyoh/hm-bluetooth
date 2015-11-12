@@ -33,13 +33,12 @@ function main() {
 
   stdin.addListener("data", function(d) {
     var command = d.toString().trim();
-    command = command.toUpperCase();
 
-    var first = command.split(' ')[0];
+    var first = command.split(' ')[0].toUpperCase();
 
     switch(first) {
-      case 'H':
-      case 'HELP':
+      case 'U':
+      case 'USAGE':
         Help.print(command.split(' ')[1]);
         prompt();
         break;
@@ -60,18 +59,27 @@ function main() {
         connect.attention();
         break;
 
-      case 'G':
-      case 'GET':
-        connect.get.apply(connect, command.split(' ').slice(1));
-        break;
-
-      case 'S':
-      case 'SET':
-        connect.set.apply(connect, command.split(' ').slice(1));
+      case 'WAKE':
+        connect.wake();
         break;
 
       default:
-        connect.command.apply(connect, command.split(' '))
+        if(first.endsWith('?')) {
+          connect.get.apply(connect, command.split(' '));
+        } else {
+          let pattern = CommandPattern[first];
+          if(!pattern) {
+            console.log('Invalid Command : ' + command);
+            prompt();
+          } else if(pattern.command) {
+            connect.command.apply(connect, command.split(' '));
+          } else if(pattern.set) {
+            connect.set.apply(connect, command.split(' '));
+          } else {
+            console.log('Invalid Command : ' + command);
+            prompt();
+          }
+        }
     }
   });
 

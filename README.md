@@ -13,10 +13,38 @@ $ npm install
 ```
 $ node app/console
 ❤               # command prompt
-❤ h             # help - available command list
-❤ h name        # help for the specified command or setting
+❤ u             # usage - available command list
+❤ u name        # usage for the specified command or setting
 ❤ at            # attention command
-❤ g name        # get commands : g [command]
-❤ s name TEST   # set command : s [command] [parameter]
-❤ start         # other commands
+❤ name?         # query property
+❤ name TEST     # set property
+❤ start         # commands
+```
+```
+❤ renew         # renew command
+RENEW
+❤ reset         # reset command
+RESET
+❤ at            # attention command
+OK
+❤ marj 0x1234   # set major version to 0x1234
+0x1234
+❤ mino 0xFA01   # set minor version to 0xFA01
+0xFA01
+❤ advi 5        # set advertise interval to 5 sec.
+5
+❤ name HOTCHOCO # set name to HOTCHOCO
+HOTCHOCO
+❤ name?         # query name
+HOTCHOCO
+❤ adty 3        # set non-connectable mode
+3
+❤ ibea 1
+1
+❤ delo 2
+2
+❤ pwrm 0
+0
+❤ reset
+RESET
 ```
