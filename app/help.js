@@ -8,9 +8,10 @@ function print(command) {
 
     printTopMenu();
   } else {
-
-    printGetParamsInfo(command);
-    printSetParamsInfo(command);
+    let upperCase = command.toUpperCase();
+    printCommandInfo(upperCase);
+    printGetParamsInfo(upperCase);
+    printSetParamsInfo(upperCase);
   }
 }
 
@@ -50,7 +51,7 @@ function printTopMenu() {
   }
 
   console.log("");
-  console.log("[g]et commands");
+  console.log("Get commands");
 
   for(var id in CommandPattern) {
     let command = CommandPattern[id];
@@ -60,7 +61,7 @@ function printTopMenu() {
   }
 
   console.log("");
-  console.log("[s]et commands");
+  console.log("Set commands");
   for(var id in CommandPattern) {
     let command = CommandPattern[id];
     if(command.set) {
@@ -71,23 +72,37 @@ function printTopMenu() {
   console.log("==================================");
 }
 
-function printGetParamsInfo(command) {
+function printCommandInfo(cmd) {
 
-  var pattern = CommandPattern[command];
+  var pattern = CommandPattern[cmd];
+  var command = pattern && pattern.command;
+
+  if(!command) {
+    return;
+  }
+
+  console.log('[ ' + cmd + ' ] ' + pattern.desc);
+}
+
+function printGetParamsInfo(cmd) {
+
+  var pattern = CommandPattern[cmd];
   var command = pattern && pattern.get;
 
   if(!command) {
     return;
   }
 
+  console.log('[ ' + cmd + '? ] Get ' + pattern.desc);
+
   if(!command.params) {
-    console.log('Get Command Has no Parameters.');
+    console.log('No Parameters.');
     return;
   }
 
-  console.log('Get Command Parameters.');
+  command.params.forEach(function(param, i) {
+    console.log('- Parameter #' + (i + 1));
 
-  command.params.forEach(function(param) {
     if(param.desc instanceof Array) {
       console.log(param.name + ' ' + param.pattern + ' =>');
       console.log('\t' + param.desc.join('\n\t'));
@@ -97,23 +112,25 @@ function printGetParamsInfo(command) {
   });
 }
 
-function printSetParamsInfo(command) {
+function printSetParamsInfo(cmd) {
 
-  var pattern = CommandPattern[command];
+  var pattern = CommandPattern[cmd];
   var command = pattern && pattern.set;
 
   if(!command) {
     return;
   }
 
+  console.log('[ ' + cmd + ' ] Set ' + pattern.desc);
+
   if(!command.params) {
     console.log('Set Command Has no Parameters.');
     return;
   }
 
-  console.log('Set Command Parameters.');
+  command.params.forEach(function(param, i) {
+    console.log('- Parameter #' + (i + 1));
 
-  command.params.forEach(function(param) {
     if(param.desc instanceof Array) {
       console.log(param.name + ' ' + param.pattern + ' =>');
       console.log('\t' + param.desc.join('\n\t'));

@@ -6,7 +6,7 @@ var Help = require('./help');
 var SerialPort = require('serialport');
 var CommandPattern = require('../lib/command_pattern');
 
-var connect = new Connect('/dev/tty.usbserial');
+var connect = new Connect(process.argv[2]);
 // var connect = new Connect('/dev/ttyUSB0');
 
 connect.open(function(err) {
@@ -65,17 +65,24 @@ function main() {
 
       default:
         if(first.endsWith('?')) {
+
           connect.get.apply(connect, command.split(' '));
         } else {
+
           let pattern = CommandPattern[first];
+
           if(!pattern) {
+
             console.log('Invalid Command : ' + command);
             prompt();
           } else if(pattern.command) {
+
             connect.command.apply(connect, command.split(' '));
           } else if(pattern.set) {
+
             connect.set.apply(connect, command.split(' '));
           } else {
+
             console.log('Invalid Command : ' + command);
             prompt();
           }
