@@ -5,9 +5,19 @@ var Connect = require('../index');
 var Help = require('./help');
 var SerialPort = require('serialport');
 var CommandPattern = require('../lib/command_pattern');
+var Package = require('../package.json');
 
-var connect = new Connect(process.argv[2]);
-// var connect = new Connect('/dev/ttyUSB0');
+var Settings;
+
+try {
+  Settings = require('../user_settings');
+} catch(e) {
+  Settings = require('../user_settings_default');
+}
+
+var device = process.argv[2] || Settings.device;
+
+var connect = new Connect(device);
 
 connect.open(function(err) {
   if(err) {
@@ -27,7 +37,13 @@ function prompt() {
   process.stdout.write('❤ ');
 }
 
+function greetings() {
+  console.log('Enjoy hm-bluetooth v' + Package.version);
+}
+
 function main() {
+
+  greetings()
 
   var stdin = process.openStdin();
 

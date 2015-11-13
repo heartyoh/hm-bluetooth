@@ -29,3 +29,6 @@ node_modules
 
 # Optional npm cache directory
 .npm
+
+# User Settings
+user_settings.json
